@@ -9,4 +9,5 @@ const controller = require("./reservations.controller");
 
 router.route("/").get(controller.list);
 
+
 module.exports = router;

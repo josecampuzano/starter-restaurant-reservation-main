@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useQuery from "../utils/useQuery";
 import { listReservations } from "../utils/api";
 import { previous, next } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
@@ -20,14 +19,10 @@ function Dashboard({ date }) {
 
 
   // sets the query parameter to the currentDate paramater (intended so that API calls are made to the specific date in the query param)
-  // history.push({
-  //   pathname: '/dashboard',
-  //   search: `?date=${currentDate}`
-  // })
-
-  const query = useQuery();
-  const dateQuery = query.get("date");
-  const [dashDate, setDashDate] = useState(dateQuery ? dateQuery : date);
+  history.push({
+    pathname: '/dashboard',
+    search: `?date=${currentDate}`
+  })
 
 
   // loads the dashboard
@@ -44,21 +39,18 @@ function Dashboard({ date }) {
   }
 
   // handles click of previous button and sets the current date to one day before by calling the previousDate function
-  const prevDateButtonClickHandler =  (date) => {
+  const prevDateButtonClickHandler = (date) => {
     setCurrentDate(previous(date))
-    history.push(`/dashboard?date=${currentDate}`)
   }
 
   // handles click of the today button and sets the current date to date(today's date)
   const todayDateButtonClickHandler = (todaysDate) => {
     setCurrentDate(todaysDate)
-    history.push(`/dashboard?date=${currentDate}`)
   }
 
   // handles click of next button and sets the current date to one day later by calling the nextDate function
   const nextDateButtonClickHandler = (date) => {
     setCurrentDate(next(date))
-    history.push(`/dashboard?date=${currentDate}`)
   }
 
   return (
