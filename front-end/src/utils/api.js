@@ -31,7 +31,7 @@ headers.append("Content-Type", "application/json");
  */
 async function fetchJson(url, options, onCancel) {
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url, options); // pass down the date to here 
 
     if (response.status === 204) {
       return null;
@@ -59,11 +59,14 @@ async function fetchJson(url, options, onCancel) {
  */
 
 export async function listReservations(params, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations`);
+  const url = new URL(`${API_BASE_URL}/reservations`); //you can add the date parameter to the end of the url string
   Object.entries(params).forEach(([key, value]) =>
-    url.searchParams.append(key, value.toString())
+    url.searchParams.append(key, value.toString()) // this will take the object and will append the key and the values to the url string
   );
-  return await fetchJson(url, { headers, signal }, [])
+  return await fetchJson(url, { headers, signal }, []) 
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+// .../reservations/?date=[]
+// PASS NY DATE TO THE API CALL 
