@@ -5,9 +5,9 @@ function CreateReservationPage(){
     
     // defines the initial values for the Create Reservation Form
     const initialFormState = {
-        first_name: "First Name",
-        last_name: "LastName",
-        mobile_number: "000-000-0000",
+        first_name: "",
+        last_name: "",
+        mobile_number: "",
         reservation_date: "",
         reservation_time: "",
         people: 1
@@ -23,6 +23,10 @@ function CreateReservationPage(){
             [target.name]: target.value
         })
     }
+
+    // handles submission of form 
+    // does this need to go to the database? 
+    // can we export the information once we have it submitted?
 
     // returns form component with props passed down as default values
     return (

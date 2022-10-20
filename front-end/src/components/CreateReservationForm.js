@@ -25,6 +25,7 @@ function CreateReservationForm({handleFormChange, first_name, last_name, mobile_
             type="name"
             className="form-control"
             id="firstName"
+            placeholder="First Name"
             value={first_name}
             onChange={handleFormChange}
             aria-describedby="First Name"
@@ -41,6 +42,7 @@ function CreateReservationForm({handleFormChange, first_name, last_name, mobile_
             type="name"
             className="form-control"
             id="lastName"
+            placeholder="Last Name"
             value={last_name}
             onChange={handleFormChange}
             aria-describedby="Last Name"
@@ -57,6 +59,7 @@ function CreateReservationForm({handleFormChange, first_name, last_name, mobile_
             type="tel"
             className="form-control"
             id="mobileNumber"
+            placeholder="000-000-0000"
             value={mobile_number}
             onChange={handleFormChange}
             aria-describedby="Mobile Number"
