@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom"
+import ReservationsTable from "../components/ReservationsTable";
 
 /**
  * Defines the dashboard page.
@@ -54,11 +55,11 @@ function Dashboard({ date, nextDate, previousDate }) {
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Reservations for {currentDate}</h4>
       </div>
-      <button type="button" className="btn btn-secondary" onClick={() => prevDateButtonClickHandler(currentDate)}>Previous</button>
+        <button type="button" className="btn btn-secondary" onClick={() => prevDateButtonClickHandler(currentDate)}>Previous</button>
         <button type="button" className="btn btn-secondary" onClick={() => todayDateButtonClickHandler(date)}>Today</button>
         <button type="button" className="btn btn-secondary" onClick={() => nextDateButtonClickHandler(currentDate)}>Next</button>
+      <ReservationsTable reservationData={reservations}/>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
     </main>
   );
 }
