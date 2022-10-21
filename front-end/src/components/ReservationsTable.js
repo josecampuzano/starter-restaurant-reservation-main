@@ -2,7 +2,6 @@ import React from "react";
 
 function ReservationsTable({ reservationData, date }) {
   const reservationTableRows = reservationData
-    .filter((reservation) => reservation.reservation_date === date)
     .map((reservation, index) => (
       <tr key={index}>
         <th scope="row">{reservation.reservation_id}</th>
