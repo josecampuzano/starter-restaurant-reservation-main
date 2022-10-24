@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
-import { previous, next } from "../utils/date-time";
+import { previous, next, today } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom"
 import ReservationsTable from "../components/ReservationsTable";
+import TablesTable from "../components/TablesTable";
 
 /**
  * Defines the dashboard page.
@@ -15,52 +16,52 @@ function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const history = useHistory()
-  const [currentDate, setCurrentDate] = useState(date);
 
 
-  
 
   /**
  * loads the dashboard
  * updates the search query
- * calls listReservation with object that passes down the currentDate 
+ * calls listReservation with object that passes down the date 
  */
-  useEffect(loadDashboard, [currentDate]);
+  useEffect(loadDashboard, [date]);
+ 
   function loadDashboard() {
     const abortController = new AbortController();
-    history.push(`/dashboard?date=${currentDate}`)
     setReservationsError(null);
-    listReservations({ date: currentDate }, abortController.signal)
+    listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
 
   // handles click of previous button and sets the current date to one day before by calling the previousDate function
-  const prevDateButtonClickHandler = (date) => {
-    setCurrentDate(previous(date))
+  const prevDateButtonClickHandler = () => {
+    history.push(`/dashboard?date=${previous(date)}`)
+
   }
 
   // handles click of the today button and sets the current date to date(today's date)
-  const todayDateButtonClickHandler = (todaysDate) => {
-    setCurrentDate(todaysDate)
+  const todayDateButtonClickHandler = () => {
+    history.push(`/dashboard?date=${today()}`)
   }
 
   // handles click of next button and sets the current date to one day later by calling the nextDate function
-  const nextDateButtonClickHandler = (date) => {
-    setCurrentDate(next(date))
+  const nextDateButtonClickHandler = () => {
+    history.push(`/dashboard?date=${next(date)}`)
   }
 
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {currentDate}</h4>
+        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
-        <button type="button" className="btn btn-secondary" onClick={() => prevDateButtonClickHandler(currentDate)}>Previous</button>
-        <button type="button" className="btn btn-secondary" onClick={() => todayDateButtonClickHandler(date)}>Today</button>
-        <button type="button" className="btn btn-secondary" onClick={() => nextDateButtonClickHandler(currentDate)}>Next</button>
-      <ReservationsTable reservationData={reservations} date={currentDate}/>
+        <button type="button" className="btn btn-secondary" onClick={prevDateButtonClickHandler}>Previous</button>
+        <button type="button" className="btn btn-secondary" onClick={todayDateButtonClickHandler}>Today</button>
+        <button type="button" className="btn btn-secondary" onClick={nextDateButtonClickHandler}>Next</button>
+      <ReservationsTable reservationData={reservations} date={date}/>
+      {/* <TablesTable /> */}
       <ErrorAlert error={reservationsError} />
     </main>
   );

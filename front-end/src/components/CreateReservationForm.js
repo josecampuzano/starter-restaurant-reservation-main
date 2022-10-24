@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom"
 
 
-function CreateReservationForm({handleFormChange, first_name, last_name, mobile_number, reservation_date, reservation_time, people}) {
+function CreateReservationForm({handleFormChange, first_name, last_name, mobile_number, reservation_date, reservation_time, people, newResSubmitHandler}) {
 
   // initializing history object 
   const history = useHistory()
@@ -14,7 +14,7 @@ function CreateReservationForm({handleFormChange, first_name, last_name, mobile_
 
   return (
     <React.Fragment>
-      <form>
+      <form onSubmit={newResSubmitHandler}>
         {/* First Name */}
         <div className="mb-3">
           <label className="form-label">
