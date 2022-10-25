@@ -6,6 +6,7 @@ import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import CreateReservationPage from "../pages/CreateReservationPage";
 import useQuery from "../utils/useQuery"
+import CreateTablePage from "../pages/CreateTablePage";
 
 /**
  * Defines all the routes for the application.
@@ -20,9 +21,7 @@ function Routes() {
 
   const query = useQuery();
   const date = query.get("date")
-  // const name = query.get("name")
-  // const limit = query.get("limit")
-  // console.log(date, name, limit)
+
 
   return (
     <Switch>
@@ -37,6 +36,9 @@ function Routes() {
       </Route>
       <Route path="/reservations/new">
         <CreateReservationPage />
+      </Route>
+      <Route path="/tables/new">
+        <CreateTablePage />
       </Route>
       <Route>
         <NotFound />

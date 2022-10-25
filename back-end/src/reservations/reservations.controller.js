@@ -2,10 +2,8 @@
  * List handler for reservation resources
  */
 
-//TODO refactor to iuse res.locals in the middleware after initial check 
 const reservationService = require("./reservations.service");
 const hasProperties = require("../errors/hasProperties");
-const { min } = require("../db/connection");
 
 const VALID_PROPERTIES = [
   "first_name",
@@ -133,6 +131,28 @@ function timeWithinOperatingHours (req, res, next) {
   next()
 }
 
+function reservationExists(req, res, next) {
+  reservationService
+    .read(req.params.reservation_Id)
+    .then((reservation) => {
+      if(reservation) {
+        res.locals.reservation = reservation
+        return next()
+      }
+      next({
+        status: 400, 
+        message: `Reservation cannot be found`
+      })
+    })
+    .catch(next)
+}
+
+async function read(req, res, next){ 
+  const { reservation: data } = res.locals
+  res.json({ data })
+}
+
+
 async function list(req, res) {
   const data = await reservationService.list(req.query.date);
   res.json({ data });
@@ -144,6 +164,8 @@ async function create(req, res, next) {
     .then((data) => res.status(201).json({ data }))
     .catch(next);
 }
+
+
 
 module.exports = {
   list,
@@ -157,4 +179,8 @@ module.exports = {
     dateIsNotInFuture,
     timeWithinOperatingHours,
     create],
+  read: [
+    reservationExists,
+    read,
+  ]
 };

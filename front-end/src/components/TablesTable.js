@@ -1,6 +1,16 @@
 import React from "react";
 
-function TablesTable() {
+function TablesTable({ tablesData }) {
+  
+  const tableInfo = tablesData
+    .map((table, index) => (
+    <tr key={index}>
+      <th scope="row">{table.table_id}</th>
+      <td>{table.table_name}</td>
+      <td>{table.capacity}</td>
+      <td>Free?</td>
+    </tr>
+    ))
 
 
   return (
@@ -15,14 +25,9 @@ function TablesTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">#</th>
-            <td>Table Name</td>
-            <td>Capacity</td>
-            <td>Free?</td>
-          </tr>
+          {tableInfo}
         </tbody>
-      </table>{" "}
+      </table>
     </React.Fragment>
   );
 }
