@@ -63,12 +63,12 @@ function timeIsValid(req, res, next) {
   const time = res.locals.reservation_time
   const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(time)
   if(!isValid) {
-    return next({
+    return next({ 
       status: 400,
       message: `The time you entered is not valid. Please enter a valid reservation_time`
     })
   }
-  next()
+  next() 
 }
 
 // checks that the day does not fall on a Tuesday where monday = 0 and Sunday = 6
@@ -133,15 +133,15 @@ function timeWithinOperatingHours (req, res, next) {
 
 function reservationExists(req, res, next) {
   reservationService
-    .read(req.params.reservation_Id)
+    .read(Number(req.params.reservation_Id))
     .then((reservation) => {
       if(reservation) {
         res.locals.reservation = reservation
         return next()
       }
       next({
-        status: 400, 
-        message: `Reservation cannot be found`
+        status: 404, 
+        message: `Reservation ${req.params.reservation_Id} cannot be found`
       })
     })
     .catch(next)
@@ -182,5 +182,6 @@ module.exports = {
   read: [
     reservationExists,
     read,
-  ]
+  ],
+  reservationExists
 };

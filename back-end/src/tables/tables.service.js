@@ -6,6 +6,13 @@ function list() {
     .orderBy("table_name")
 }
 
+function read(tableId) {
+    return knex("tables")
+    .select("*")
+    .where({ table_id: tableId})
+    .first()
+}
+
 function create(table) {
     return knex("tables")
     .insert(table)
@@ -13,7 +20,19 @@ function create(table) {
     .then((createdRecords) => createdRecords[0])
 }
 
+//to successfully update, you will have to pass in the tableID to match the row 
+// and the reservationID to add to the column 
+function update(updatedRes, tableId) {
+    return knex("tables")
+        .select("*")
+        .where({ table_id: tableId })
+        .update(updatedRes, "*")
+
+        .then((updatedRecord) => updatedRecord[0])
+}
+
 module.exports = {
     list,
     create,
+    update,
 }

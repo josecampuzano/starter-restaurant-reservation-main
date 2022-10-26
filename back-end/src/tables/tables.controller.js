@@ -1,5 +1,6 @@
 const tablesService = require("./tables.service")
 const hasProperties = require("../errors/hasProperties")
+const reservationService = require("../reservations/reservations.service")
 
 // set up valid properties and then call the function has properties on those properties 
 const VALID_PROPERTIES = [
@@ -47,6 +48,52 @@ function capacityIsNum (req, res, next) {
     next()
 }
 
+
+function dataIsMissing (req, res, next) {
+    const { data } = req.body
+    if(data){
+        res.locals.data = data
+       return next() 
+    }
+    next({
+        status: 400,
+        message: `There is no data to update`
+    })
+}
+
+function reservationIdMissing (req, res, next) {
+    const data = res.locals.data
+    const reservationId = data.reservation_id
+    if(!reservationId) {
+        return next({
+            status: 400, 
+            message: `The reservation_id is missing.`
+        })
+    }
+    next()
+}
+
+function reservationExists(req, res, next) {
+    reservationService
+      .read(Number(req.body.data.reservation_id))
+      .then((reservation) => {
+        if(reservation) {
+          res.locals.reservation = reservation
+          return next()
+        }
+        next({
+          status: 404, 
+          message: `Reservation ${req.body.data.reservation_id} cannot be found`
+        })
+      })
+      .catch(next)
+  }
+
+
+function readTable(req, res, next) {
+
+}
+
 async function list(req, res) {
     const data = await tablesService.list()
     res.json({ data })
@@ -59,6 +106,18 @@ async function create(req, res, next) {
     .catch(next)
 }
 
+async function update(req, res, next) {
+    // define the tableID and pass it down to the service seperately
+    const tableId = req.params.table_id
+    const updatedRes = {
+        ...req.body.data,
+    }
+    tablesService
+        .update(updatedRes, tableId)
+        .then((data) => res.status(200).json({ data }))
+        .catch(next)
+}
+
 module.exports = {
     list,
     create: [
@@ -67,5 +126,11 @@ module.exports = {
         tableNameCharacterLengthValid,
         capacityIsNum,
         create,
+    ],
+    update: [
+        dataIsMissing,
+        reservationIdMissing,
+        reservationExists,
+        update
     ]
 }

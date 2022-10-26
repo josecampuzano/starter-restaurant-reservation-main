@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
@@ -7,6 +6,7 @@ import { today } from "../utils/date-time";
 import CreateReservationPage from "../pages/CreateReservationPage";
 import useQuery from "../utils/useQuery"
 import CreateTablePage from "../pages/CreateTablePage";
+import SeatReservationPage from "../pages/SeatReservationsPage";
 
 /**
  * Defines all the routes for the application.
@@ -21,6 +21,7 @@ function Routes() {
 
   const query = useQuery();
   const date = query.get("date")
+
 
 
   return (
@@ -39,6 +40,9 @@ function Routes() {
       </Route>
       <Route path="/tables/new">
         <CreateTablePage />
+      </Route>
+      <Route path="/reservations/:reservation_Id/seat">
+        <SeatReservationPage />
       </Route>
       <Route>
         <NotFound />
