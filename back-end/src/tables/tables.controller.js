@@ -1,6 +1,7 @@
 const tablesService = require("./tables.service")
 const hasProperties = require("../errors/hasProperties")
 const reservationService = require("../reservations/reservations.service")
+const { table } = require("../db/connection")
 
 // set up valid properties and then call the function has properties on those properties 
 const VALID_PROPERTIES = [
@@ -90,8 +91,45 @@ function reservationExists(req, res, next) {
   }
 
 
-function readTable(req, res, next) {
+function tableExists(req, res, next) {
+    tablesService
+        .read(req.params.table_id)
+        .then((table) => {
+            if(table) {
+                res.locals.table = table
+                return next()
+            }
+            next({
+                status: 400, 
+                message: `The table ${req.params.table_id} does not exist`
+            })
+        })
+        .catch(next)
+}
 
+
+function capacityValidation(req, res, next) {
+    const { capacity } = res.locals.table
+    const { people } = res.locals.reservation
+
+    if (Number(people) > Number(capacity)) {
+        return next({
+            status: 400, 
+            message: `The number of people in this party exceeds the capacity of the table`
+        })
+    }
+    next()
+}
+
+function occupiedValidation(req, res, next) {
+    const { reservation_id } = res.locals.table
+    if(reservation_id) {
+        return next({
+            status: 400, 
+            message: `The table you selected is currently occupied by another party. Please select a different table.`
+        })
+    }
+    next()
 }
 
 async function list(req, res) {
@@ -131,6 +169,9 @@ module.exports = {
         dataIsMissing,
         reservationIdMissing,
         reservationExists,
+        tableExists, 
+        capacityValidation,
+        occupiedValidation,
         update
     ]
 }
