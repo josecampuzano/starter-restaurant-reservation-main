@@ -15,10 +15,10 @@ import TablesTable from "../components/TablesTable";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([])
-  const [tablesError, setTablesError] = useState(null)
+  // const [tablesError, setTablesError] = useState(null)
   const [reservationsError, setReservationsError] = useState(null);
   const history = useHistory()
-
+  console.log(reservationsError)
 
   /**
  * loads the dashboard
@@ -27,17 +27,15 @@ function Dashboard({ date }) {
  */
   useEffect(loadDashboard, [date]);
  
+
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
+      .then(listTables)
+      .then(setTables)
       .catch(setReservationsError);
-    listTables(abortController.signal)
-      .then((response) => {
-        setTables(response)
-      })
-      .catch(setTablesError)
     return () => abortController.abort();
   }
 
@@ -69,7 +67,7 @@ function Dashboard({ date }) {
       <ReservationsTable reservationData={reservations} date={date}/>
       <TablesTable tablesData={tables}/>
       <ErrorAlert error={reservationsError} />
-      <ErrorAlert error={tablesError} />
+      {/* <ErrorAlert error={tablesError} /> */}
     </main>
   );
 }

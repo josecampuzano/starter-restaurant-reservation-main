@@ -12,7 +12,7 @@ function SeatReservationPage(){
     const [tables, setTables] = useState([])
     const [tablesError, setTablesError] = useState(null)
     const params = useParams()
-    const reservation_id = params.reservation_Id
+    const reservation_id = params.reservation_id
 
 
     useEffect(loadReservation, [reservation_id])

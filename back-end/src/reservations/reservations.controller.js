@@ -88,7 +88,8 @@ function dateIsNotTuesday (req, res, next) {
 // checks that the reservation_date is in the future 
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.reservation_date
-  const resDate = new Date(date)
+  const time = res.locals.reservation_time
+  const resDate = new Date(`${date} ${time}`)
   const todaysDate = new Date()
   if(resDate < todaysDate){
     return next({

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreateTableForm from "../components/CreateTableForm";
 import { addTable } from "../utils/api";
 import { useHistory } from "react-router";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function CreateTablePage() {
   const history = useHistory()
@@ -48,6 +49,7 @@ function CreateTablePage() {
         capacity={newTableFormData.capacity}
         newTableSubmitHandler={newTableSubmitHandler}
       />
+      <ErrorAlert error={newTableError}/>
     </React.Fragment>
   );
 }
