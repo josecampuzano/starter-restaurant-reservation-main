@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { deleteTableRes } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
-function TablesTable({ tablesData }) {
+function TablesTable({ tablesData, loadDashboard }) {
+  const [deleteError, setDeleteError] = useState(null)
+
+  function finishOnClickHandler(tableId) {
+    if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")) {
+      const abortController = new AbortController()
+      setDeleteError(null)
+      deleteTableRes(tableId)
+        .then(() => {
+          loadDashboard()
+        })
+        .catch(setDeleteError)
+      return () => abortController.abort()
+    }
+  }
+
+
+   
   
   const tableInfo = tablesData
     .map((table, index) => (
@@ -9,11 +28,11 @@ function TablesTable({ tablesData }) {
       <td>{table.table_name}</td>
       <td>{table.capacity}</td>
       <td data-table-id-status={`${table.table_id}`} >{table.reservation_id ? "Occupied" : "Free"}</td>
-      <td> {table.reservation_id ? <button data-table-id-finish={table.table_id} className="btn btn-warning"> Finish </button> : null}</td>
+      <td> {table.reservation_id ? <button data-table-id-finish={table.table_id} onClick={() => finishOnClickHandler(table.table_id)} className="btn btn-warning"> Finish </button> : null}</td>
     </tr>
     ))
 
-    // have a function that handles the finish button function Finish(tableId, updatedResData) where updatedRes is reservationId: null 
+
 
   return (
     <React.Fragment>
@@ -31,6 +50,7 @@ function TablesTable({ tablesData }) {
           {tableInfo}
         </tbody>
       </table>
+      <ErrorAlert error={deleteError} />
     </React.Fragment>
   );
 }

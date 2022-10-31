@@ -13,7 +13,8 @@ function hasOnlyValidProperties(req, res, next) {
     res.locals = data
 
     const invalidFields = Object.keys(data).filter(
-    (field) => !VALID_PROPERTIES.includes(field))
+    // (field) => ![...VALID_PROPERTIES, "reservation_id"].includes(field))
+    (field) => ![...VALID_PROPERTIES, "reservation_id"].includes(field))
 
     if(invalidFields.length) {
         return next({

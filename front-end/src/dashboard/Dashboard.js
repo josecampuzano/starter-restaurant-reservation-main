@@ -65,7 +65,7 @@ function Dashboard({ date }) {
         <button type="button" className="btn btn-secondary" onClick={todayDateButtonClickHandler}>Today</button>
         <button type="button" className="btn btn-secondary" onClick={nextDateButtonClickHandler}>Next</button>
       <ReservationsTable reservationData={reservations} date={date}/>
-      <TablesTable tablesData={tables}/>
+      <TablesTable tablesData={tables} loadDashboard={loadDashboard}/>
       <ErrorAlert error={reservationsError} />
       {/* <ErrorAlert error={tablesError} /> */}
     </main>

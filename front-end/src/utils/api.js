@@ -106,6 +106,16 @@ export async function updateTable(bodyData, tableId, signal) {
   return await fetchJson(url, options, bodyData)
 }
 
+export async function deleteTableRes(tableId, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${tableId}/seat`)
+  const options = {
+    method: "DELETE", 
+    headers,
+    signal
+  }
+  return await fetchJson(url, options)
+}
+
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`)
   return await fetchJson(url, {headers, signal}, [])
