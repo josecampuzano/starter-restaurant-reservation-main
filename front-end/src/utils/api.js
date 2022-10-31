@@ -31,7 +31,7 @@ headers.append("Content-Type", "application/json");
  */
 async function fetchJson(url, options, onCancel) {
   try {
-    const response = await fetch(url, options); // pass down the date to here 
+    const response = await fetch(url, options); 
 
     if (response.status === 204) {
       return null;
@@ -68,5 +68,45 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 
-// .../reservations/?date=[]
-// PASS NY DATE TO THE API CALL 
+export async function addReservation(reservation, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations`)
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+  }
+  return await fetchJson(url, options, reservation)
+}
+
+export async function readReservation(reservation_Id, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_Id}`)
+  return await fetchJson(url, {headers, signal}, [])
+}
+
+export async function addTable(table, signal) {
+  const url = new URL(`${API_BASE_URL}/tables`)
+  const options = {
+    method: "POST", 
+    headers, 
+    body: JSON.stringify({ data: table }),
+    signal,
+  }
+  return await fetchJson(url, options, table)
+}
+
+export async function updateTable(bodyData, tableId, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${tableId}/seat`)
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: bodyData }),
+    signal,
+  }
+  return await fetchJson(url, options, bodyData)
+}
+
+export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`)
+  return await fetchJson(url, {headers, signal}, [])
+}
