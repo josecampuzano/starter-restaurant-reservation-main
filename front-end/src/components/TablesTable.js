@@ -9,9 +9,11 @@ function TablesTable({ tablesData }) {
       <td>{table.table_name}</td>
       <td>{table.capacity}</td>
       <td data-table-id-status={`${table.table_id}`} >{table.reservation_id ? "Occupied" : "Free"}</td>
+      <td> {table.reservation_id ? <button data-table-id-finish={table.table_id} className="btn btn-warning"> Finish </button> : null}</td>
     </tr>
     ))
 
+    // have a function that handles the finish button function Finish(tableId, updatedResData) where updatedRes is reservationId: null 
 
   return (
     <React.Fragment>
@@ -21,7 +23,8 @@ function TablesTable({ tablesData }) {
             <th scope="col">#</th>
             <th scope="col">Table Name</th>
             <th scope="col">Capacity</th>
-            <th scope="col">Free?</th>
+            <th scope="col">Free?</th>  
+            <th scope="col">{null}</th>
           </tr>
         </thead>
         <tbody>
