@@ -1,7 +1,5 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 
-//TODO do we need to add a ternary operator here so that we can display the seat button when they are not seated and turn it off when they are seated? 
 
 function ReservationsTable({ reservationData, date }) {
 
@@ -17,11 +15,11 @@ function ReservationsTable({ reservationData, date }) {
         <td>{reservation.reservation_date}</td>
         <td>{reservation.reservation_time}</td>
         <td>{reservation.people}</td>
-        <td>Booked</td>
+        <td>{reservation.status}</td>
         <td>
-          <a className="btn btn-secondary" role="button" href={`/reservations/${reservation.reservation_id}/seat`}>
+          {reservation.status === "booked" ? <a className="btn btn-secondary" role="button" href={`/reservations/${reservation.reservation_id}/seat`}>
             Seat
-          </a>
+          </a> : null}
         </td>
       </tr>
     ));
@@ -38,6 +36,7 @@ function ReservationsTable({ reservationData, date }) {
             <th scope="col">Time</th>
             <th scope="col">People</th>
             <th scope="col">Status</th>
+            <th scope="col">{null}</th>
           </tr>
         </thead>
         <tbody>{reservationTableRows}</tbody>
