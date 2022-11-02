@@ -226,8 +226,18 @@ async function read(req, res, next){
 }
 
 async function list(req, res) {
-  const data = await reservationService.list(req.query.date);
-  res.json({ data });
+  // TODO you can add a ternary operator here so that you can select which to list. Either those with the date or those with the number. If there were more than two you could use a switch
+  const { mobile_number } = req.query
+  const { date } = req.query
+  if(date){
+    const data = await reservationService.list(req.query.date);
+    res.json({ data });
+  }
+  if(mobile_number){
+    const data = await reservationService.listWithNumber(mobile_number)
+    res.json({ data })
+  }
+
 }
 
 async function create(req, res, next) {

@@ -59,14 +59,16 @@ async function fetchJson(url, options, onCancel) {
  */
 
 export async function listReservations(params, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations`); //you can add the date parameter to the end of the url string
+  const url = new URL(`${API_BASE_URL}/reservations`); 
   Object.entries(params).forEach(([key, value]) =>
-    url.searchParams.append(key, value.toString()) // this will take the object and will append the key and the values to the url string
+    url.searchParams.append(key, value.toString()) 
   );
   return await fetchJson(url, { headers, signal }, []) 
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+
 
 export async function addReservation(reservation, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`)
