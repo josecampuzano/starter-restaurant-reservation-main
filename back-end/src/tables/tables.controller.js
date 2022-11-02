@@ -196,7 +196,9 @@ async function update(req, res, next) {
 
 async function destroy(req, res, next) {
     const tableId = req.params.table_id
-    const { reservation_id } = req.body.data
+    // const { reservation_id } = req.body.data 
+    const { reservation_id } = res.locals.table
+
     tablesService
         .delete(tableId, reservation_id)
         .then((data) => res.status(200).json({ data }))
