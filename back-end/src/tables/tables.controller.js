@@ -160,6 +160,17 @@ function tableIsNotOccupied(req, res, next) {
     next()
 }
 
+function tableIsAlreadySeatedCheck(req, res, next) {
+    const { status } = res.locals.reservation
+    if(status === "seated") {
+        return next({
+            status: 400, 
+            message: `This reservation is already seated.`
+        })
+    }
+    next()
+}
+
 async function list(req, res) {
     const data = await tablesService.list()
     res.json({ data })
@@ -173,7 +184,7 @@ async function create(req, res, next) {
 }
 
 async function update(req, res, next) {
-    const tableId = req.params.table_id
+    const tableId = req.params.table_id 
     const updatedRes = {
         ...req.body.data,
     }
@@ -185,8 +196,9 @@ async function update(req, res, next) {
 
 async function destroy(req, res, next) {
     const tableId = req.params.table_id
+    const { reservation_id } = req.body.data
     tablesService
-        .delete(tableId)
+        .delete(tableId, reservation_id)
         .then((data) => res.status(200).json({ data }))
         .catch(next)
 }
@@ -207,6 +219,7 @@ module.exports = {
         tableExists, 
         capacityValidation,
         occupiedValidation,
+        tableIsAlreadySeatedCheck,
         update
     ], 
     delete: [tableExistsInDestroy, tableIsNotOccupied, destroy]

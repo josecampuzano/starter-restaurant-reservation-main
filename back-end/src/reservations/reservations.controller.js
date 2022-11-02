@@ -3,51 +3,40 @@
  */
 
 const reservationService = require("./reservations.service");
-const hasProperties = require("../errors/hasProperties");
-
-const VALID_PROPERTIES = [
-  "first_name",
-  "last_name",
-  "mobile_number",
-  "reservation_date",
-  "reservation_time",
-  "people",
-]
-// validates the required properties for a new reservation based on VALID_PROPERTIES array
-const hasRequiredProperties = hasProperties(...VALID_PROPERTIES)
 
 // checks that the people value entered is a number
-function peopleIsNum (req, res, next) {
-  const people = res.locals.people
+function peopleCheck (req, res, next) {
+  const { people } = res.locals.data
   if(typeof people !== "number"){ 
     return next({
       status: 400,
       message: `We would love to know how many people will be joining us for this reservation! Please provide a number when filling out the People Field!`
     })
   }
-  next()
-}
-
-// checks that the form inputs on contain the valid properties 
-function hasOnlyValidProperties(req, res, next) {
-  const { data = {} } = req.body
-  res.locals = data
-
-  const invalidFields = Object.keys(data).filter(
-    (field) => !VALID_PROPERTIES.includes(field))
-
-  if(invalidFields.length) {
+  if(Number(people) === 0) {
     return next({
-      status: 400, 
-      message: `Invalid field(s): ${invalidFields.join(", ")}`,
+      status: 400,
+      message: `The number of people in the party must be at least 1`
     })
   }
   next()
 }
 
+function dataIsMissing (req, res, next) {
+  const { data } = req.body
+  if(data){
+    res.locals.data = data
+     return next() 
+  }
+  next({
+      status: 400,
+      message: `There is no data to update`
+  })
+}
+
 // checks that the date entered is a valid date
 function dateIsValid(req, res, next) {
-  const date = res.locals.reservation_date  
+  const date = res.locals.data.reservation_date  
   const parsedDate = Date.parse(date)
   if(!parsedDate) {
     return next ({
@@ -60,7 +49,7 @@ function dateIsValid(req, res, next) {
 
 // checks that the time entered is a valid time
 function timeIsValid(req, res, next) {
-  const time = res.locals.reservation_time
+  const time = res.locals.data.reservation_time
   const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(time)
   if(!isValid) {
     return next({ 
@@ -71,9 +60,60 @@ function timeIsValid(req, res, next) {
   next() 
 }
 
+function firstNameCheck (req, res, next) {
+  const { first_name } = res.locals.data 
+  if(!first_name) {
+    return next({
+      status: 400,
+      message: `You must include a First Name for the first_name field!`
+    })
+  }
+  if(first_name === "") {
+    return next({
+      status: 400,
+      message: `The first_name you enter cannot be empty`
+    })
+  }
+  next()
+}
+
+function lastNameCheck (req, res, next) {
+  const { last_name } = res.locals.data 
+  if(!last_name) {
+    return next({
+      status: 400,
+      message: `You must include a Last Name for the last_name field!`
+    })
+  }
+  if(last_name === "") {
+    return next({
+      status: 400,
+      message: `The last_name you enter cannot be empty`
+    })
+  }
+  next()
+}
+
+function mobilePhoneCheck (req, res, next) {
+  const { mobile_number } = res.locals.data 
+  if(!mobile_number) {
+    return next({
+      status: 400,
+      message: `You must include a Mobile Number for the mobile_number field!`
+    })
+  }
+  if(mobile_number === "") {
+    return next({
+      status: 400,
+      message: `The mobile_number you enter cannot be empty`
+    })
+  }
+  next()
+}
+
 // checks that the day does not fall on a Tuesday where monday = 0 and Sunday = 6
 function dateIsNotTuesday (req, res, next) {
-  const date = res.locals.reservation_date
+  const date = res.locals.data.reservation_date
   const newDate = new Date((date))
   const dateDay = newDate.getDay()
   if(dateDay === 1) {
@@ -87,8 +127,8 @@ function dateIsNotTuesday (req, res, next) {
 
 // checks that the reservation_date is in the future 
 function dateIsNotInFuture (req, res, next) {
-  const date = res.locals.reservation_date
-  const time = res.locals.reservation_time
+  const date = res.locals.data.reservation_date
+  const time = res.locals.data.reservation_time
   const resDate = new Date(`${date} ${time}`)
   const todaysDate = new Date()
   if(resDate < todaysDate){
@@ -103,7 +143,7 @@ function dateIsNotInFuture (req, res, next) {
 
 // checks the reservation_time against the ideal operating hours 10:30 AM - 9:30 PM
 function timeWithinOperatingHours (req, res, next) {
-  const time = res.locals.reservation_time
+  const time = res.locals.data.reservation_time
   const hoursString = time.slice(0,2)
   const minutesString = time.slice(3, 5)
   const hour = Number(hoursString)
@@ -148,11 +188,42 @@ function reservationExists(req, res, next) {
     .catch(next)
 }
 
+function checkStatusIsBooked(req, res, next) {
+  const { status } = res.locals.data
+  if(status === "booked" || !status) {
+    return next()
+  } 
+  next({
+    status: 400,
+    message: `The status of a new reservation should be booked and not seated or finished`
+  })
+}
+
+function checkCurrentStatus(req, res, next) {
+  const { status } = res.locals.reservation
+  if(status === "finished") {
+    return next({
+      status: 400, 
+      message: `The status of a reservation cannot be finished, it must be booked or seated.`
+    })
+  }
+  next()
+}
+function checkStatusUnknown(req, res, next) {
+  const { status } = req.body.data
+  if(status === "unknown") {
+    return next({
+      status: 400, 
+      message: `The status of a reservation must be booked or seated and cannot be unknown`
+    })
+  }
+  next()
+}
+
 async function read(req, res, next){ 
   const { reservation: data } = res.locals
   res.json({ data })
 }
-
 
 async function list(req, res) {
   const data = await reservationService.list(req.query.date);
@@ -166,23 +237,42 @@ async function create(req, res, next) {
     .catch(next);
 }
 
+async function updateStatus(req, res, next) {
+  const { reservation_Id } = req.params
+  const status = { status: req.body.data.status }
 
+  reservationService
+    .updateStatus(reservation_Id, status)
+    .then((data) => res.status(200).json({ data }))
+    .catch(next)
+}
 
 module.exports = {
   list,
   create: [
-    hasOnlyValidProperties, 
-    hasRequiredProperties, 
-    peopleIsNum, 
+    dataIsMissing,
+    peopleCheck, 
+    firstNameCheck,
+    lastNameCheck,
+    mobilePhoneCheck,
     dateIsValid, 
     timeIsValid, 
     dateIsNotTuesday,
     dateIsNotInFuture,
     timeWithinOperatingHours,
-    create],
+    checkStatusIsBooked,
+    create
+  ],
   read: [
     reservationExists,
     read,
   ],
-  reservationExists
+  updateStatus: [
+    reservationExists,
+    checkCurrentStatus,
+    checkStatusUnknown,
+    updateStatus
+  ],
+  reservationExists,
+
 };
