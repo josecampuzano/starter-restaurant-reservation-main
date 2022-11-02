@@ -61,7 +61,7 @@ function timeIsValid(req, res, next) {
 }
 
 function firstNameCheck (req, res, next) {
-  const { first_name } = res.locals.data 
+  const { first_name } = res.locals.data
   if(!first_name) {
     return next({
       status: 400,
@@ -226,7 +226,6 @@ async function read(req, res, next){
 }
 
 async function list(req, res) {
-  // TODO you can add a ternary operator here so that you can select which to list. Either those with the date or those with the number. If there were more than two you could use a switch
   const { mobile_number } = req.query
   const { date } = req.query
   if(date){
@@ -253,6 +252,16 @@ async function updateStatus(req, res, next) {
 
   reservationService
     .updateStatus(reservation_Id, status)
+    .then((data) => res.status(200).json({ data }))
+    .catch(next)
+}
+
+async function updateReservation(req, res, next) {
+  const { reservation_Id } = req.params
+  const updatedRes = {...req.body.data}
+
+  reservationService
+    .updateReservation(reservation_Id, updatedRes)
     .then((data) => res.status(200).json({ data }))
     .catch(next)
 }
@@ -284,5 +293,18 @@ module.exports = {
     updateStatus
   ],
   reservationExists,
+  updateReservation: [
+    reservationExists,
+    dataIsMissing,
+    peopleCheck,
+    firstNameCheck,
+    lastNameCheck,
+    mobilePhoneCheck,
+    dateIsValid, 
+    timeIsValid, 
+    dateIsNotTuesday,
+    dateIsNotInFuture,
+    updateReservation,
+  ],
 
 };
