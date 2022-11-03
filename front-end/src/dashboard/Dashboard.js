@@ -18,7 +18,6 @@ function Dashboard({ date }) {
   // const [tablesError, setTablesError] = useState(null)
   const [reservationsError, setReservationsError] = useState(null);
   const history = useHistory()
-  console.log(reservationsError)
 
   /**
  * loads the dashboard
@@ -64,7 +63,7 @@ function Dashboard({ date }) {
         <button type="button" className="btn btn-secondary" onClick={prevDateButtonClickHandler}>Previous</button>
         <button type="button" className="btn btn-secondary" onClick={todayDateButtonClickHandler}>Today</button>
         <button type="button" className="btn btn-secondary" onClick={nextDateButtonClickHandler}>Next</button>
-      <ReservationsTable reservationData={reservations} date={date}/>
+      <ReservationsTable reservationData={reservations} date={date} loadDashboard={loadDashboard}/>
       <TablesTable tablesData={tables} loadDashboard={loadDashboard}/>
       <ErrorAlert error={reservationsError} />
       {/* <ErrorAlert error={tablesError} /> */}

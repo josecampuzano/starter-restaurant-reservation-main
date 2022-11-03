@@ -37,7 +37,6 @@ function SearchPage(){
     
     }
 
-    console.log(reservations)
     return (
         <React.Fragment>
             <SearchReservationForm 
