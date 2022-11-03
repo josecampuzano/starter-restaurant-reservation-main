@@ -59,14 +59,16 @@ async function fetchJson(url, options, onCancel) {
  */
 
 export async function listReservations(params, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations`); //you can add the date parameter to the end of the url string
+  const url = new URL(`${API_BASE_URL}/reservations`); 
   Object.entries(params).forEach(([key, value]) =>
-    url.searchParams.append(key, value.toString()) // this will take the object and will append the key and the values to the url string
+    url.searchParams.append(key, value.toString()) 
   );
   return await fetchJson(url, { headers, signal }, []) 
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+
 
 export async function addReservation(reservation, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`)
@@ -82,6 +84,8 @@ export async function addReservation(reservation, signal) {
 export async function readReservation(reservation_Id, signal) {
   const url = new URL(`${API_BASE_URL}/reservations/${reservation_Id}`)
   return await fetchJson(url, {headers, signal}, [])
+  .then(formatReservationDate)
+  .then(formatReservationTime);
 }
 
 export async function addTable(table, signal) {
@@ -106,7 +110,39 @@ export async function updateTable(bodyData, tableId, signal) {
   return await fetchJson(url, options, bodyData)
 }
 
+export async function updateReservation(bodyData, reservationId, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${reservationId}`)
+  const options = {
+    method: "PUT", 
+    headers,
+    body: JSON.stringify({ data: bodyData }),
+    signal,
+  }
+  return await fetchJson(url, options, bodyData)
+}
+
+export async function deleteTableRes(tableId, signal) {
+  const url = new URL(`${API_BASE_URL}/tables/${tableId}/seat`)
+  const options = {
+    method: "DELETE", 
+    headers,
+    signal
+  }
+  return await fetchJson(url, options)
+}
+
 export async function listTables(signal) {
   const url = new URL(`${API_BASE_URL}/tables`)
   return await fetchJson(url, {headers, signal}, [])
+}
+
+
+export async function cancelReservation(reservationId, bodyData, signal){
+  const url = new URL(`${API_BASE_URL}/reservations/${reservationId}/status`)
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: bodyData })
+  }
+  return await fetchJson(url, options, bodyData)
 }

@@ -35,7 +35,6 @@ function SeatReservationForm({ reservationData, tablesData }) {
     const reqBodyData = {
       reservation_id: Number(reservation_id),
     };
-    console.log("about to update the table")
     updateTable(reqBodyData, tableId)
       .then(() => {
         history.push("/dashboard");

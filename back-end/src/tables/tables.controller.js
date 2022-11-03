@@ -1,7 +1,6 @@
 const tablesService = require("./tables.service")
 const hasProperties = require("../errors/hasProperties")
 const reservationService = require("../reservations/reservations.service")
-const { table } = require("../db/connection")
 
 // set up valid properties and then call the function has properties on those properties 
 const VALID_PROPERTIES = [
@@ -14,7 +13,8 @@ function hasOnlyValidProperties(req, res, next) {
     res.locals = data
 
     const invalidFields = Object.keys(data).filter(
-    (field) => !VALID_PROPERTIES.includes(field))
+    // (field) => ![...VALID_PROPERTIES, "reservation_id"].includes(field))
+    (field) => ![...VALID_PROPERTIES, "reservation_id"].includes(field))
 
     if(invalidFields.length) {
         return next({
@@ -107,6 +107,22 @@ function tableExists(req, res, next) {
         .catch(next)
 }
 
+function tableExistsInDestroy(req, res, next) {
+    tablesService
+        .read(req.params.table_id)
+        .then((table) => {
+            if(table) {
+                res.locals.table = table
+                return next()
+            }
+            next({
+                status: 404, 
+                message: `The table ${req.params.table_id} does not exist`
+            })
+        })
+        .catch(next)
+}
+
 
 function capacityValidation(req, res, next) {
     const { capacity } = res.locals.table
@@ -132,6 +148,29 @@ function occupiedValidation(req, res, next) {
     next()
 }
 
+function tableIsNotOccupied(req, res, next) {
+    // console.log(res.locals.reservation)
+    const { reservation_id } = res.locals.table
+    if(reservation_id === null) {
+        return next({
+            status: 400, 
+            message: `The table is not occupied; you cannot unseat a table with no seated guests`,
+        })
+    }
+    next()
+}
+
+function tableIsAlreadySeatedCheck(req, res, next) {
+    const { status } = res.locals.reservation
+    if(status === "seated") {
+        return next({
+            status: 400, 
+            message: `This reservation is already seated.`
+        })
+    }
+    next()
+}
+
 async function list(req, res) {
     const data = await tablesService.list()
     res.json({ data })
@@ -145,13 +184,23 @@ async function create(req, res, next) {
 }
 
 async function update(req, res, next) {
-    // define the tableID and pass it down to the service seperately
-    const tableId = req.params.table_id
+    const tableId = req.params.table_id 
     const updatedRes = {
         ...req.body.data,
     }
     tablesService
         .update(updatedRes, tableId)
+        .then((data) => res.status(200).json({ data }))
+        .catch(next)
+}
+
+async function destroy(req, res, next) {
+    const tableId = req.params.table_id
+    // const { reservation_id } = req.body.data 
+    const { reservation_id } = res.locals.table
+
+    tablesService
+        .delete(tableId, reservation_id)
         .then((data) => res.status(200).json({ data }))
         .catch(next)
 }
@@ -172,6 +221,8 @@ module.exports = {
         tableExists, 
         capacityValidation,
         occupiedValidation,
+        tableIsAlreadySeatedCheck,
         update
-    ]
+    ], 
+    delete: [tableExistsInDestroy, tableIsNotOccupied, destroy]
 }
