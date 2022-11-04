@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { cancelReservation } from "../utils/api";
+import ReservationsListBanner from "../assets/ReservationsListBanner.png"
 
 
 function ReservationsTable({ reservationData, date, loadDashboard }) {
@@ -41,7 +42,7 @@ function ReservationsTable({ reservationData, date, loadDashboard }) {
           </a> : null}
         </td>
         <td>
-          {reservation.status === "booked" ? <a className="btn btn-warning" role="button" href={`/reservations/${reservation.reservation_id}/edit`}>
+          {reservation.status === "booked" ? <a className="btn res-list-edit-btn" role="button" href={`/reservations/${reservation.reservation_id}/edit`}>
             Edit
           </a> : null}
         </td>
@@ -55,6 +56,12 @@ function ReservationsTable({ reservationData, date, loadDashboard }) {
 
   return (
     <React.Fragment>
+      <img
+      className="img-fluid mx-auto d-block"
+      src={ReservationsListBanner}
+      alt={"Reservations Banner with a check mark"}
+      >
+      </img>
       <table className="table">
         <thead>
           <tr>

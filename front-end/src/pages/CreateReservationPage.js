@@ -50,6 +50,7 @@ function CreateReservationPage() {
   // returns form component with props passed down as default values
   return (
     <React.Fragment>
+      <br></br>
       <h1>Create Reservation</h1>
       <ErrorAlert error={newResError}/>  
       <CreateReservationForm
@@ -62,6 +63,8 @@ function CreateReservationPage() {
         people={newResFormData.people}
         newResSubmitHandler={newResSubmitHandler}
       />
+      <br></br>
+
     </React.Fragment>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-//TODO pass down the resevations array and check the length to conditionally render the table or the no reservations found
+import FoundReservations from "../assets/FoundReservations.png"
 
 function SearchReservationList({ reservations }) {
     
@@ -21,6 +21,13 @@ function SearchReservationList({ reservations }) {
     
     return (
         <React.Fragment>
+          <br></br>
+          <img
+          className="img-fluid mx-auto d-block"
+          src={FoundReservations}
+          alt={"Person bending over with a magnifying glass"}
+          >
+          </img>
             <table className="table">
         <thead>
           <tr>

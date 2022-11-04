@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { deleteTableRes } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import TablesListBanner from "../assets/TablesListBanner.png"
 
 function TablesTable({ tablesData, loadDashboard }) {
   const [deleteError, setDeleteError] = useState(null)
@@ -28,7 +29,7 @@ function TablesTable({ tablesData, loadDashboard }) {
       <td>{table.table_name}</td>
       <td>{table.capacity}</td>
       <td data-table-id-status={`${table.table_id}`} >{table.reservation_id ? "Occupied" : "Free"}</td>
-      <td> {table.reservation_id ? <button data-table-id-finish={table.table_id} onClick={() => finishOnClickHandler(table.table_id)} className="btn btn-warning"> Finish </button> : null}</td>
+      <td> {table.reservation_id ? <button data-table-id-finish={table.table_id} onClick={() => finishOnClickHandler(table.table_id)} className="btn tbls-finish-btn"> Finish </button> : null}</td>
     </tr>
     ))
 
@@ -36,6 +37,12 @@ function TablesTable({ tablesData, loadDashboard }) {
 
   return (
     <React.Fragment>
+      <img
+      className="img-fluid mx-auto d-block"
+      src={TablesListBanner}
+      alt={"Tables Banner with a table"}
+      >
+      </img>
       <table className="table">
         <thead>
           <tr>
@@ -43,7 +50,7 @@ function TablesTable({ tablesData, loadDashboard }) {
             <th scope="col">Table Name</th>
             <th scope="col">Capacity</th>
             <th scope="col">Free?</th>  
-            <th scope="col">{null}</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -115,9 +115,9 @@ function CreateReservationForm({handleFormChange, first_name, last_name, mobile_
           ></input>
         </div>
         {/* Cancel Button */}
-        <button className="btn btn-secondary" onClick={cancelButtonClick}>Cancel</button>
+        <button className="btn create-res-canc-btn mr-2" onClick={cancelButtonClick}>Cancel</button>
         {/* Submit Button */}
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn create-res-subm-btn">
           Submit
         </button>
       </form>
