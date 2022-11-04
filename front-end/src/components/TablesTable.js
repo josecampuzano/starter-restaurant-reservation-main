@@ -10,7 +10,7 @@ function TablesTable({ tablesData, loadDashboard }) {
     if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")) {
       const abortController = new AbortController()
       setDeleteError(null)
-      deleteTableRes(tableId)
+      deleteTableRes(tableId, abortController.signal)
         .then(() => {
           loadDashboard()
         })
@@ -24,7 +24,7 @@ function TablesTable({ tablesData, loadDashboard }) {
   
   const tableInfo = tablesData
     .map((table, index) => (
-    <tr key={index}>
+    <tr key={table.table_id}>
       <th scope="row">{table.table_id}</th>
       <td>{table.table_name}</td>
       <td>{table.capacity}</td>
@@ -49,7 +49,7 @@ function TablesTable({ tablesData, loadDashboard }) {
             <th scope="col">#</th>
             <th scope="col">Table Name</th>
             <th scope="col">Capacity</th>
-            <th scope="col">Free?</th>  
+            <th scope="col">Status</th>  
             <th scope="col">Actions</th>
           </tr>
         </thead>

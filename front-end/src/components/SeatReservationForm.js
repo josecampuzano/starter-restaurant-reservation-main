@@ -35,7 +35,7 @@ function SeatReservationForm({ reservationData, tablesData }) {
     const reqBodyData = {
       reservation_id: Number(reservation_id),
     };
-    updateTable(reqBodyData, tableId)
+    updateTable(reqBodyData, tableId, abortController.signal)
       .then(() => {
         history.push("/dashboard");
       })

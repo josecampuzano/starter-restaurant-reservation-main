@@ -30,7 +30,27 @@
   background-color: #9fd255;
 }
 
+.res-upcoming-card { 
+  background-color: #9fd255;
+}
+
+.res-seated-card { 
+  background-color: #9fd255;
+}
+
+.table-free-card {
+  background-color: #9fd255;
+}
+
+.table-occupied-card {
+  background-color: #9fd255;
+}
+
 .create-res-canc-btn {
   background-color: #596269;
   color: white;
+}
+
+.create-table-submit-btn {
+  background-color: #9fd255;
 }

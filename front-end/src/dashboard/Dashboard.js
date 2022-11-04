@@ -5,6 +5,8 @@ import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom"
 import ReservationsTable from "../components/ReservationsTable";
 import TablesTable from "../components/TablesTable";
+import ReservationsCardInfo from "../components/ReservationsCardInfo";
+import TablesCardInfo from "../components/TablesCardInfo";
 
 /**
  * Defines the dashboard page.
@@ -71,7 +73,9 @@ function Dashboard({ date }) {
       </div>  
       <br></br>    
       <ReservationsTable reservationData={reservations} date={date} loadDashboard={loadDashboard}/>
+      <ReservationsCardInfo reservationData={reservations}/>
       <TablesTable tablesData={tables} loadDashboard={loadDashboard}/>
+      <TablesCardInfo tablesData={tables}/>
       <ErrorAlert error={reservationsError} />
       {/* <ErrorAlert error={tablesError} /> */}
     </main>

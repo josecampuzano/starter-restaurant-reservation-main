@@ -3,6 +3,7 @@ import CreateReservationForm from "../components/CreateReservationForm";
 import { addReservation } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationsListBanner from "../assets/ReservationsListBanner.png"
 
 function CreateReservationPage() {
   const history = useHistory();
@@ -39,7 +40,7 @@ function CreateReservationPage() {
       ...newResFormData,
       people: Number(newResFormData.people),
     };
-    addReservation(formDataFormatted)
+    addReservation(formDataFormatted, abortController.signal)
         .then(() => {
             history.push(`/dashboard?date=${newResFormData.reservation_date}`);
         })
@@ -51,8 +52,15 @@ function CreateReservationPage() {
   return (
     <React.Fragment>
       <br></br>
-      <h1>Create Reservation</h1>
       <ErrorAlert error={newResError}/>  
+      <img
+      className="img-fluid mx-auto d-block"
+      src={ReservationsListBanner}
+      alt={"Reservations Banner with a check mark"}
+      >
+      </img>
+      <br></br>
+      <h1>Create Reservation</h1>
       <CreateReservationForm
         handleFormChange={handleFormChange}
         first_name={newResFormData.first_name}

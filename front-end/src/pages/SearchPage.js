@@ -34,7 +34,6 @@ function SearchPage(){
             .then(setReservations)
             .catch(setSearchError)
         return () => abortController.abort()
-    
     }
 
     return (

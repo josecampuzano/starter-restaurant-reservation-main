@@ -23,6 +23,7 @@ function CreateTableForm({ handleFormChange, table_name, capacity, newTableSubmi
             aria-describedby="tableName"
             required
           ></input>
+          <br></br>
           <label className="form-label">Capacity</label>
           <input 
             name="capacity"
@@ -34,8 +35,8 @@ function CreateTableForm({ handleFormChange, table_name, capacity, newTableSubmi
             required
           ></input>
         </div>
-        <button className="btn btn-secondary" onClick={cancelButtonClick}>Cancel</button>
-        <button type="submit" className="btn btn-primary">
+        <button className="btn btn-secondary mr-2" onClick={cancelButtonClick}>Cancel</button>
+        <button type="submit" className="btn create-table-submit-btn">
           Submit
         </button>
       </form>

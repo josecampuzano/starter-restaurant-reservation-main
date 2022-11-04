@@ -6,7 +6,7 @@ function SearchReservationList({ reservations }) {
 
     const reservationTableRows = reservations
     .map((reservation, index) => (
-      <tr key={index}>
+      <tr key={reservation.reservation_id}>
         <th scope="row">{reservation.reservation_id}</th>
         <td>
           {reservation.first_name} {reservation.last_name}
