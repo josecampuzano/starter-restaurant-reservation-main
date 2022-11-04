@@ -40,18 +40,18 @@ Create a new reservation by clicking on the `+ New Reservation` at the top of th
 
 ![Create Reservation](/readMeAssets/CreateReservation.png)
 ### Edit Reservation
-You can edit any of the reservations that have not been seated by clicking on the `Edit` button found at the bottom of each reservation card. Clicking the edit button will redirect the user to an edit reservation page which will allow the user to edit any of the customer information. 
+You can edit any of the reservations that have not been seated by clicking on the `Edit` button found under `Actions` for each table. Clicking the edit button will redirect the user to an edit reservation page which will allow the user to edit any of the customer information. 
 
 <br />
 
 
 ### Cancel Reservation
-User has the ability to cancel any reservation that has been created and yet to be seated. Clicking on the `Cancel` button at the bottom of each reservation card will generate a Window Confirmation dialog box and will be asking the user to confirm the cancellation. 
+User has the ability to cancel any reservation that has been created and yet to be seated. Clicking on the `Cancel` button found under `Actions` for each table will generate a Window Confirmation dialog box will ask the user to confirm the cancellation. 
 
 ![Cancel Reservation](/readMeAssets/CancelReservationConfirmation.png)
 
 ### Seat Reservation
-To seat a reservation, simply click on the `Seat` button, this will redirect the user to a new page where the user can view the reservation party size. It will also display to the user a dropdown table which will list all of the tables and the table's max seating. 
+To seat a reservation, simply click on the `Seat` button, this will redirect the user to a new page where the user can view the reservation party size. A dropdown table will list all of the tables and the table's max seating. 
 
 >If the party size is too big for the selected table, an error will notify the user that the selected table is too small.
 
@@ -63,7 +63,7 @@ To seat a reservation, simply click on the `Seat` button, this will redirect the
 ![Seated Table](/readMeAssets/SeatedTableExample.png)
 
 ### Search Reservation
-At the top of the navbar is a link to a search bar. When user clicks on the link it will redirect them to the search bar where the user can input any mobile number and will lookup to see if that mobile number has been used for a reservation. It will also show the status of the mobile number as either `Seated`, `Booked`, `Cancelled`, or `Finished`.
+At the top of the navbar is a link to a search page. When the user clicks on the link it will redirect them to the search form where the user can input any mobile number. If the number exists in the database, the reservations with a matching number will be displayed. It will also show the status of the mobile number as either `Seated`, `Booked`, `Cancelled`, or `Finished`.
 
 ![Search](/readMeAssets/SearchReservations.png)
 
@@ -72,7 +72,7 @@ At the top of the navbar is a link to a search bar. When user clicks on the link
 
 
 ### Create Table
-User can click on the top of the page with the `New Table` button. It will redirect the user to the New Table page which allows the user to create a new table name and the seating capacity. 
+User can click on the `New Table` button. It will redirect the user to the New Table page which allows the user to create a new table name and the seating capacity. 
 
 
 ## Database setup
