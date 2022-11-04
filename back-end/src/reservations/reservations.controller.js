@@ -131,7 +131,7 @@ function dateIsNotInFuture (req, res, next) {
   const time = res.locals.data.reservation_time
   const resDate = new Date(`${date} ${time}`)
   const todaysDate = new Date()
-  if(resDate < todaysDate){
+  if(resDate - todaysDate < 0){
     return next({
       status: 400,
       message: `The reservation_date must be in the future`
