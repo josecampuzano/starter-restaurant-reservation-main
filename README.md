@@ -38,46 +38,42 @@ Create a new reservation by clicking on the `+ New Reservation` at the top of th
 
 <br />
 
-![Create Reservation](/assets/CreateReservation.png)
-![Error Example](/assets/ErrorExample.png)
+![Create Reservation](/readMeAssets/CreateReservation.png)
 ### Edit Reservation
 You can edit any of the reservations that have not been seated by clicking on the `Edit` button found at the bottom of each reservation card. Clicking the edit button will redirect the user to an edit reservation page which will allow the user to edit any of the customer information. 
 
 <br />
 
-![Edit Reservation](/assets/EditReservation.png)
-
 
 ### Cancel Reservation
 User has the ability to cancel any reservation that has been created and yet to be seated. Clicking on the `Cancel` button at the bottom of each reservation card will generate a Window Confirmation dialog box and will be asking the user to confirm the cancellation. 
 
-![Cancel Reservation](/assets/CancelReservation.png)
+![Cancel Reservation](/readMeAssets/CancelReservationConfirmation.png)
 
 ### Seat Reservation
 To seat a reservation, simply click on the `Seat` button, this will redirect the user to a new page where the user can view the reservation party size. It will also display to the user a dropdown table which will list all of the tables and the table's max seating. 
 
 >If the party size is too big for the selected table, an error will notify the user that the selected table is too small.
 
-![Seat Reservation](/assets/SeatReservation.png)
+![Seat Reservation](/readMeAssets/SeatReservationOptions.png)
 
 <br />
 
 ### Example of a seated table
-![Seated Table](/assets/SeatedTable.png)
+![Seated Table](/readMeAssets/SeatedTableExample.png)
 
 ### Search Reservation
 At the top of the navbar is a link to a search bar. When user clicks on the link it will redirect them to the search bar where the user can input any mobile number and will lookup to see if that mobile number has been used for a reservation. It will also show the status of the mobile number as either `Seated`, `Booked`, `Cancelled`, or `Finished`.
 
-![Search](/assets/Search.png)
+![Search](/readMeAssets/SearchReservations.png)
 
 ### Example of search listing
-![Search List](/assets/SearchList.png)
+![Search List](/readMeAssets/SearchReservationsResults.png)
 
 
 ### Create Table
 User can click on the top of the page with the `New Table` button. It will redirect the user to the New Table page which allows the user to create a new table name and the seating capacity. 
 
-![Create Table](/assets/CreateTable.png)
 
 ## Database setup
 1. Set up four new ElephantSQL database instances - development, test, preview, and production - by following the instructions in this [article](https://medium.com/@noogetz/how-to-setup-a-database-with-elephantsql-7d87ea9953d0).
