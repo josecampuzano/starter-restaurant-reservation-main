@@ -3,29 +3,13 @@
 ## Introduction
 Periodic Tables is a restaurant reservation booking and table management system. Users of this application can view, create, edit, and delete reservations. Users can also search for reservations via mobile-number. Users can create new tables and seat reservations at a specific table. When seating the reservation at a table, validation will occur to ensure that the table size is of capable capacity for the reservation.
 
-#
+
 ## Active Example
 
 
-## Technologies used
-_Back end:_
-1. Node
-1. Express
-1. Knex
-1. PostgreSQL
-1. Jest
+## Server Paths 
+Please see the table below for a lits of the paths the server is capable of. For new paths, please submit an issue with a description of the path and the use-case of the path. 
 
-* ![JavaScript-shield]
-* ![Node.js-shield]
-* ![Express-shield]
-* ![PostgreSQL-shield]
-* [![React][React.js]][React-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-
-_Font end:_
-1. React (hooks, router, icons, etc...)
-1. Bootstrap
-1. e2e tests
 
 | Route | Method |  Description |
 | ----- | ------ |  ----------- |
@@ -45,8 +29,12 @@ _Font end:_
 ## Features
 
 ### Create Reservation
-You can create a reservation in the next way. First you can create a new reservation by clicking on the `+ New Reservation` at the top of the page. Each reservation requires a first name, last name, mobile number, party size, reservation time, and reservation date.
-> Errors will be thrown if one of the following were to occur: Invalid mobile number length, any of the fields are empty, date of reservation must be placed for the future, and the reservation time must be valid as well being between the restaurant operating hours.
+Create a new reservation by clicking on the `+ New Reservation` at the top of the page. Each reservation requires a first name, last name, mobile number, party size, reservation time, and reservation date.
+> Errors will be thrown if one of the following were to occur: 
+1. Invalid mobile number length 
+2. Any of the fields are empty 
+3. Date of reservation is in the past 
+4. Time of reservation is not between the restaurant operating hours.
 
 <br />
 
@@ -111,7 +99,22 @@ Run `npx knex` commands from within the `back-end` folder, which is where the `k
 This project has unit, integration, and end-to-end (e2e) tests. 
 End-to-end tests use browser automation to interact with the application just like the user does.
 
+## Built With
+_Back end:_
+* ![JavaScript-shield]
+* ![Node.js-shield]
+* ![Express-shield]
+* ![PostgreSQL-shield]
 
+_Font end:_
+* [![React][React.js]][React-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* ![CSS-Shield]
+* ![JavaScript-shield]
+
+_Other:_
+* ![JEST-Shield]
+* ![VSCode-Shield]
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -125,3 +128,6 @@ End-to-end tests use browser automation to interact with the application just li
 [Node.js-shield]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
 [Express-shield]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
 [PostgreSQL-shield]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
+[CSS-Shield]: https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white
+[JEST-Shield]: https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white
+[VSCode-Shield]: https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white
