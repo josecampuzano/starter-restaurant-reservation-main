@@ -226,8 +226,8 @@ async function read(req, res, next){
 }
 
 async function list(req, res) {
-  const { mobile_number } = req.query
-  const { date } = req.query
+  const { mobile_number } = req.query 
+  const { date } = req.query          
   if(date){
     const data = await reservationService.list(req.query.date);
     res.json({ data });

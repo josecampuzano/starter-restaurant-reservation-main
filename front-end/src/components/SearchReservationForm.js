@@ -5,7 +5,8 @@ function SearchReservationForm({ handleFormChange, mobile_number, searchFormSubm
 
   return (
     <React.Fragment>
-      <h1>Search</h1>
+      <br></br>
+      <h1>Search Reservations</h1>
       <form onSubmit={searchFormSubmitHandler}>
         <div className="mb-3">
           <label className="form-label">Search reservations by phone number</label>
@@ -21,7 +22,8 @@ function SearchReservationForm({ handleFormChange, mobile_number, searchFormSubm
           ></input>
         </div>
 
-        <button type="submit" className="btn btn-warning">
+        <button type="submit" 
+        className="btn search-form-find-btn">
           Find
         </button>
       </form>

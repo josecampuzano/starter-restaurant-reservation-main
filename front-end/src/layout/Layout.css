@@ -1,4 +1,56 @@
 .side-bar {
-  background-color: #393a44;
+  background-color: #596269;
   min-width: 200px;
+}
+
+
+
+.search-form-find-btn {
+  background-color: #596269;
+  color: white;
+}
+
+.footer {
+  background-color: #596269;
+}
+
+.footer-text {
+  color: white;
+}
+
+.create-res-subm-btn {
+  background-color: #9fd255;
+}
+
+.res-list-edit-btn {
+  background-color: #9fd255;
+}
+
+.tbls-finish-btn {
+  background-color: #9fd255;
+}
+
+.res-upcoming-card { 
+  background-color: #9fd255;
+}
+
+.res-seated-card { 
+  background-color: #9fd255;
+}
+
+.table-free-card {
+  background-color: #9fd255;
+}
+
+.table-occupied-card {
+  background-color: #9fd255;
+}
+
+.create-res-canc-btn {
+  background-color: #596269;
+  color: white;
+}
+
+.create-table-submit-btn {
+  background-color: #9fd255;
 }

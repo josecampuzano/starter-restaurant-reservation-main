@@ -5,6 +5,8 @@ import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom"
 import ReservationsTable from "../components/ReservationsTable";
 import TablesTable from "../components/TablesTable";
+import ReservationsCardInfo from "../components/ReservationsCardInfo";
+import TablesCardInfo from "../components/TablesCardInfo";
 
 /**
  * Defines the dashboard page.
@@ -56,15 +58,24 @@ function Dashboard({ date }) {
 
   return (
     <main>
+      <br></br>
+      <div className="d-flex justify-content-center">
       <h1>Dashboard</h1>
-      <div className="d-md-flex mb-3">
+      </div>
+      <div className="d-flex justify-content-center">
         <h4 className="mb-0">Reservations for {date}</h4>
       </div>
-        <button type="button" className="btn btn-secondary" onClick={prevDateButtonClickHandler}>Previous</button>
-        <button type="button" className="btn btn-secondary" onClick={todayDateButtonClickHandler}>Today</button>
-        <button type="button" className="btn btn-secondary" onClick={nextDateButtonClickHandler}>Next</button>
+      <br></br>
+      <div className="d-flex justify-content-center">
+        <button type="button" className="btn btn-secondary mr-2" onClick={prevDateButtonClickHandler}>Previous</button>
+        <button type="button" className="btn btn-secondary mr-2" onClick={todayDateButtonClickHandler}>Today</button>
+        <button type="button" className="btn btn-secondary mr-2" onClick={nextDateButtonClickHandler}>Next</button>
+      </div>  
+      <br></br>    
       <ReservationsTable reservationData={reservations} date={date} loadDashboard={loadDashboard}/>
+      <ReservationsCardInfo reservationData={reservations}/>
       <TablesTable tablesData={tables} loadDashboard={loadDashboard}/>
+      <TablesCardInfo tablesData={tables}/>
       <ErrorAlert error={reservationsError} />
       {/* <ErrorAlert error={tablesError} /> */}
     </main>

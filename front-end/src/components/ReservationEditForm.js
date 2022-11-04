@@ -1,69 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { readReservation, updateReservation } from "../utils/api";
-import { useHistory } from "react-router";
-
-function ReservationEditForm(){
-
-    const [reservationError, setReservationError] = useState(null)
-    const params = useParams()
-    const reservation_id = params.reservation_id
-    const history = useHistory()
-
-    const initialFormState = {
-        first_name: "",
-        last_name: "",
-        mobile_number: "",
-        reservation_date: "",
-        reservation_time: "",
-        people: "",
-      };
-    
-      // defines useState variable for Create Reservation Form Data
-      const [newResFormData, setNewResFormData] = useState({ ...initialFormState });
-
-    useEffect(loadReservation, [reservation_id])
-
-    function loadReservation () {
-        const abortController = new AbortController()
-        setReservationError(null)
-        readReservation(reservation_id, abortController.signal)
-            .then((response) => {
-                setNewResFormData(response)
-            })
-            .catch(setReservationError)
-        return () => abortController.abort()
-    }
-
-const cancelButtonClick = () => history.go(-1)
-
-  // handles a change in the form and stores those values within newResFormData useState variable
-  const handleFormChange = ({ target }) => {
-    setNewResFormData({
-      ...newResFormData,
-      [target.name]: target.value,
-    });
-  };
 
 
-  // handles the submission of the form
-  // makes a call to the API with the /reservations endpoint with an POST method
-  const newResSubmitHandler =  (event) => {
-    event.preventDefault();
-    const abortController = new AbortController()
-    setReservationError(null)
-    const formDataFormatted = {
-      ...newResFormData,
-      people: Number(newResFormData.people),
-    };
-    updateReservation(formDataFormatted, reservation_id, abortController.signal)
-        .then(() => {
-            history.push(`/dashboard?date=${newResFormData.reservation_date}`);
-        })
-        .catch(reservationError)
-    return () => abortController.abort()
-  };
+function ReservationEditForm({ newResSubmitHandler, handleFormChange, cancelButtonClick, first_name, last_name, mobile_number, reservation_date, reservation_time, people }){
+
+
 
     return (
         <React.Fragment>
@@ -79,7 +19,7 @@ const cancelButtonClick = () => history.go(-1)
             className="form-control"
             id="firstName"
             placeholder="First Name"
-            value={newResFormData.first_name}
+            value={first_name}
             onChange={handleFormChange}
             aria-describedby="First Name"
             required
@@ -96,7 +36,7 @@ const cancelButtonClick = () => history.go(-1)
             className="form-control"
             id="lastName"
             placeholder="Last Name"
-            value={newResFormData.last_name}
+            value={last_name}
             onChange={handleFormChange}
             aria-describedby="Last Name"
             required
@@ -113,7 +53,7 @@ const cancelButtonClick = () => history.go(-1)
             className="form-control"
             id="mobileNumber"
             placeholder="000-000-0000"
-            value={newResFormData.mobile_number}
+            value={mobile_number}
             onChange={handleFormChange}
             aria-describedby="Mobile Number"
             required
@@ -129,7 +69,7 @@ const cancelButtonClick = () => history.go(-1)
             type="date"
             className="form-control"
             id="date"
-            value={newResFormData.reservation_date}
+            value={reservation_date}
             onChange={handleFormChange}
             aria-describedby="Date"
             required
@@ -145,7 +85,7 @@ const cancelButtonClick = () => history.go(-1)
             type="time"
             className="form-control"
             id="time"
-            value={newResFormData.reservation_time}
+            value={reservation_time}
             onChange={handleFormChange}
             aria-describedby="Time"
             required
@@ -161,7 +101,7 @@ const cancelButtonClick = () => history.go(-1)
             type="number"
             className="form-control"
             id="people"
-            value={newResFormData.people}
+            value={people}
             onChange={handleFormChange}
             aria-describedby="People"
             required

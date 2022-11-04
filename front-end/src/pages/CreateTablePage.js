@@ -3,6 +3,7 @@ import CreateTableForm from "../components/CreateTableForm";
 import { addTable } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
+import TablesListBanner from "../assets/TablesListBanner.png"
 
 function CreateTablePage() {
   const history = useHistory()
@@ -29,7 +30,7 @@ function CreateTablePage() {
         ...newTableFormData, 
         capacity: Number(newTableFormData.capacity)
     }
-    addTable(formDataFormatted)
+    addTable(formDataFormatted, abortController.signal)
         .then(() => {
             history.push("/dashboard")
         })
@@ -42,6 +43,14 @@ function CreateTablePage() {
 
   return (
     <React.Fragment>
+      <br></br>
+      <img
+      className="img-fluid mx-auto d-block"
+      src={TablesListBanner}
+      alt={"Tables Banner with a table"}
+      >
+      </img>
+      <br></br>
       <h1>Create Table</h1>
       <CreateTableForm 
         handleFormChange={handleFormChange}
@@ -49,6 +58,7 @@ function CreateTablePage() {
         capacity={newTableFormData.capacity}
         newTableSubmitHandler={newTableSubmitHandler}
       />
+      <br></br>
       <ErrorAlert error={newTableError}/>
     </React.Fragment>
   );

@@ -142,6 +142,7 @@ export async function cancelReservation(reservationId, bodyData, signal){
   const options = {
     method: "PUT",
     headers,
+    signal,
     body: JSON.stringify({ data: bodyData })
   }
   return await fetchJson(url, options, bodyData)
