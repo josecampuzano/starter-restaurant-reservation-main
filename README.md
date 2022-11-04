@@ -6,6 +6,8 @@ Periodic Tables is a restaurant reservation booking and table management system.
 
 ## Active Example
 
+https://restaurant-reservation-client-hvp4.onrender.com/dashboard?date=2022-11-05
+
 
 ## Server Paths 
 Please see the table below for a lits of the paths the server is capable of. For new paths, please submit an issue with a description of the path and the use-case of the path. 
