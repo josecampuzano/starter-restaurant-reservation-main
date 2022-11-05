@@ -126,18 +126,33 @@ function dateIsNotTuesday (req, res, next) {
 }
 
 // checks that the reservation_date is in the future 
+// function dateIsNotInFuture (req, res, next) {
+//   const date = res.locals.data.reservation_date
+//   const time = res.locals.data.reservation_time
+//   const resDate = new Date(`${date} ${time}`)
+//   const todaysDate = new Date()
+//   if(resDate > todaysDate === true){
+//     return next({
+//       status: 400,
+//       message: `The reservation_date must be in the future`
+//     })
+//   }
+//   next()
+
+// }
+
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
   const time = res.locals.data.reservation_time
   const resDate = new Date(`${date} ${time}`)
   const todaysDate = new Date()
-  if(resDate - todaysDate < 0){
-    return next({
-      status: 400,
-      message: `The reservation_date must be in the future`
-    })
+  if(resDate > todaysDate === true){
+    return next()
   }
-  next()
+  next({
+    status: 400,
+    message: `The reservation_date must be in the future`
+  })
 
 }
 
