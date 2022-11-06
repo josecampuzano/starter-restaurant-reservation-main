@@ -145,7 +145,8 @@ function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
   const time = res.locals.data.reservation_time
   const resDate = new Date(`${date} ${time}`)
-  const todaysDate = new Date()
+  // const todaysDate = new Date()
+  const todaysDate = Date.now()
   if(resDate > todaysDate === true){
     return next()
   }
