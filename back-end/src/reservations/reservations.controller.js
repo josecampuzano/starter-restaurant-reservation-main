@@ -25,6 +25,7 @@ function peopleCheck (req, res, next) {
 function dataIsMissing (req, res, next) {
   const { data } = req.body
   if(data){
+    console.log(data)
     res.locals.data = data
      return next() 
   }
@@ -141,14 +142,21 @@ function dateIsNotTuesday (req, res, next) {
 
 // }
 
+// todo set a date and then use getTime()
+
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
   const time = res.locals.data.reservation_time
-  const resDate = new Date(`${date} ${time}`)
-  // const todaysDate = new Date()
-  const todaysDate = Date.now()
-  console.log("resDate", resDate)
-  console.log("todaysDate", todaysDate)
+  const resDate = new Date(`${date} ${time} UTC`)
+  const todaysDate = new Date()
+
+  // const todaysDate = Date.now()
+  console.log("date", date)
+  console.log("time", time)
+  console.log("resDate-processed", resDate)
+  console.log("todaysDate-processed", todaysDate)
+  console.log("timezoneDifference:", resDate.getTimezoneOffset())
+
   if(resDate > todaysDate === true){
     return next()
   }
