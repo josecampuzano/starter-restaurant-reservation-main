@@ -114,10 +114,15 @@ function mobilePhoneCheck (req, res, next) {
 
 // checks that the day does not fall on a Tuesday where monday = 0 and Sunday = 6
 function dateIsNotTuesday (req, res, next) {
-  const date = res.locals.data.reservation_date
-  const newDate = new Date((date))
-  const dateDay = newDate.getDay()
-  if(dateDay === 1) {
+  const date = res.locals.data.reservation_date //2022-11-07
+  console.log("date", date)
+
+  const newDate = new Date(date)
+  const UTCDay = newDate.getUTCDay()
+
+  console.log("newDate", newDate)
+  console.log("UTCDay", UTCDay)
+  if(UTCDay === 2) {
     return next({
       status: 400,
       message: `The restaurant is closed on Tuesdays. Please enter a date that is not a Tuesday for your reservation`,
@@ -151,11 +156,11 @@ function dateIsNotInFuture (req, res, next) {
   const todaysDate = new Date()
 
   // const todaysDate = Date.now()
-  console.log("date", date)
-  console.log("time", time)
-  console.log("resDate-processed", resDate)
-  console.log("todaysDate-processed", todaysDate)
-  console.log("timezoneDifference:", resDate.getTimezoneOffset())
+  // console.log("date", date)
+  // console.log("time", time)
+  // console.log("resDate-processed", resDate)
+  // console.log("todaysDate-processed", todaysDate)
+  // console.log("timezoneDifference:", resDate.getTimezoneOffset())
 
   if(resDate > todaysDate === true){
     return next()
