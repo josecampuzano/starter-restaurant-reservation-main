@@ -152,15 +152,15 @@ function dateIsNotTuesday (req, res, next) {
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
   const time = res.locals.data.reservation_time
-  const resDate = new Date(`${date} ${time} UTC`)
+  const resDate = new Date(`${date} ${time} `)
   const todaysDate = new Date()
 
   // const todaysDate = Date.now()
-  // console.log("date", date)
-  // console.log("time", time)
-  // console.log("resDate-processed", resDate)
-  // console.log("todaysDate-processed", todaysDate)
-  // console.log("timezoneDifference:", resDate.getTimezoneOffset())
+  console.log("date", date)
+  console.log("time", time)
+  console.log("resDate-processed", resDate)
+  console.log("todaysDate-processed", todaysDate)
+  console.log("timezoneDifference:", resDate.getTimezoneOffset())
 
   if(resDate > todaysDate === true){
     return next()
