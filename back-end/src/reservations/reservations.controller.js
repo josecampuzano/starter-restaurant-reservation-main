@@ -25,7 +25,6 @@ function peopleCheck (req, res, next) {
 function dataIsMissing (req, res, next) {
   const { data } = req.body
   if(data){
-    console.log(data)
     res.locals.data = data
      return next() 
   }
@@ -115,13 +114,13 @@ function mobilePhoneCheck (req, res, next) {
 // checks that the day does not fall on a Tuesday where monday = 0 and Sunday = 6
 function dateIsNotTuesday (req, res, next) {
   const date = res.locals.data.reservation_date //2022-11-07
-  console.log("date", date)
+  // console.log("date", date)
 
   const newDate = new Date(date)
   const UTCDay = newDate.getUTCDay()
 
-  console.log("newDate", newDate)
-  console.log("UTCDay", UTCDay)
+  // console.log("newDate", newDate)
+  // console.log("UTCDay", UTCDay)
   if(UTCDay === 2) {
     return next({
       status: 400,
@@ -152,15 +151,17 @@ function dateIsNotTuesday (req, res, next) {
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
   const time = res.locals.data.reservation_time
-  const resDate = new Date(`${date} ${time} `)
-  const todaysDate = new Date()
+  const resDate = new Date(`${date} ${time} UTC`)
+  const todaysDateUnformatted = new Date()
+  const userTimeZoneOffset = todaysDateUnformatted.getTimezoneOffset() * 60000
+  const todaysDate = new Date(todaysDateUnformatted.getTime() - userTimeZoneOffset)
 
   // const todaysDate = Date.now()
-  console.log("date", date)
-  console.log("time", time)
-  console.log("resDate-processed", resDate)
-  console.log("todaysDate-processed", todaysDate)
-  console.log("timezoneDifference:", resDate.getTimezoneOffset())
+  // console.log("date", date)
+  // console.log("time", time)
+  console.log("resDate-processed:", resDate)
+  console.log("todaysDate-processed:", todaysDate)
+  console.log(todaysDate - resDate)
 
   if(resDate > todaysDate === true){
     return next()
