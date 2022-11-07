@@ -52,7 +52,6 @@ function CreateReservationPage() {
   return (
     <React.Fragment>
       <br></br>
-      <ErrorAlert error={newResError}/>  
       <img
       className="img-fluid mx-auto d-block"
       src={ReservationsListBanner}
@@ -60,6 +59,7 @@ function CreateReservationPage() {
       >
       </img>
       <br></br>
+      <ErrorAlert error={newResError}/>  
       <h1>Create Reservation</h1>
       <CreateReservationForm
         handleFormChange={handleFormChange}
