@@ -147,6 +147,8 @@ function dateIsNotInFuture (req, res, next) {
   const resDate = new Date(`${date} ${time}`)
   // const todaysDate = new Date()
   const todaysDate = Date.now()
+  console.log("resDate", resDate)
+  console.log("todaysDate", todaysDate)
   if(resDate > todaysDate === true){
     return next()
   }
