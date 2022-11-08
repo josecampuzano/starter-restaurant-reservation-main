@@ -1,10 +1,10 @@
 import React from "react";
-import ReservationEditForm from "../components/ReservationEditForm";
 import { readReservation, updateReservation } from "../utils/api";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { useParams } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
+import CreateReservationForm from "../components/CreateReservationForm";
 
 
 function ReservationEditPage(){
@@ -73,7 +73,7 @@ const cancelButtonClick = () => history.go(-1)
 
     return (
         <React.Fragment>
-            <ReservationEditForm 
+            <CreateReservationForm 
             newResSubmitHandler={newResSubmitHandler}
             handleFormChange={handleFormChange}
             cancelButtonClick={cancelButtonClick}
