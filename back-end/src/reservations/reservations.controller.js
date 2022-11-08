@@ -301,7 +301,7 @@ module.exports = {
     mobilePhoneCheck,
     dateIsValid, 
     timeIsValid, 
-    dateIsNotTuesday,
+    // dateIsNotTuesday,
     dateIsNotInFuture,
     timeWithinOperatingHours,
     checkStatusIsBooked,
