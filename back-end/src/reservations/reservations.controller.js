@@ -152,9 +152,9 @@ function dateIsNotInFuture (req, res, next) {
   const userTimeZoneOffset = todaysDateUnformatted.getTimezoneOffset() * 60000 
   const todaysDate = new Date(todaysDateUnformatted.getTime() - userTimeZoneOffset)
 
-  console.log("todayDateUnformatted: ", todaysDateUnformatted)
-  console.log("resDate-processed:", resDate)
-  console.log("todaysDate-processed:", todaysDate)
+  console.log("todayDateUnformatted: ", todaysDateUnformatted, typeof todaysDateUnformatted)
+  console.log("resDate-processed:", resDate, typeof resDate)
+  console.log("todaysDate-processed:", todaysDate, typeof todaysDate)
   console.log(resDate - todaysDate)
 
   if(resDate - todaysDate > 0){
