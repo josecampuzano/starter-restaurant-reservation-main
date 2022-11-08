@@ -126,23 +126,7 @@ function dateIsNotTuesday (req, res, next) {
   next()
 }
 
-// checks that the reservation_date is in the future 
-// function dateIsNotInFuture (req, res, next) {
-//   const date = res.locals.data.reservation_date
-//   const time = res.locals.data.reservation_time
-//   const resDate = new Date(`${date} ${time}`)
-//   const todaysDate = new Date()
-//   if(resDate > todaysDate === true){
-//     return next({
-//       status: 400,
-//       message: `The reservation_date must be in the future`
-//     })
-//   }
-//   next()
 
-// }
-
-// todo set a date and then use getTime()
 
 function dateIsNotInFuture (req, res, next) {
   const date = res.locals.data.reservation_date
@@ -151,11 +135,6 @@ function dateIsNotInFuture (req, res, next) {
   const todaysDateUnformatted = new Date()
   const userTimeZoneOffset = todaysDateUnformatted.getTimezoneOffset() * 60000 
   const todaysDate = new Date(todaysDateUnformatted.getTime() - userTimeZoneOffset)
-
-  console.log("todayDateUnformatted: ", todaysDateUnformatted)
-  console.log("resDate-processed:", resDate)
-  console.log("todaysDate-processed:", todaysDate)
-  console.log(resDate - todaysDate)
 
   if(resDate - todaysDate > 0){
     return next()
@@ -302,7 +281,7 @@ module.exports = {
     mobilePhoneCheck,
     dateIsValid, 
     timeIsValid, 
-    // dateIsNotTuesday,
+    dateIsNotTuesday,
     dateIsNotInFuture,
     timeWithinOperatingHours,
     checkStatusIsBooked,
