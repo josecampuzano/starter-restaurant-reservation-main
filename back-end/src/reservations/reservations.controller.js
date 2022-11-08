@@ -149,9 +149,10 @@ function dateIsNotInFuture (req, res, next) {
   const time = res.locals.data.reservation_time
   const resDate = new Date(`${date} ${time} UTC`)
   const todaysDateUnformatted = new Date()
-  const userTimeZoneOffset = todaysDateUnformatted.getTimezoneOffset() * 60000
+  const userTimeZoneOffset = todaysDateUnformatted.getTimezoneOffset() * 60000 
   const todaysDate = new Date(todaysDateUnformatted.getTime() - userTimeZoneOffset)
 
+  console.log("todayDateUnformatted: ", todaysDateUnformatted)
   console.log("resDate-processed:", resDate)
   console.log("todaysDate-processed:", todaysDate)
   console.log(resDate - todaysDate)
